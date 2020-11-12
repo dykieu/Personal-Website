@@ -1,0 +1,5 @@
+node_modules
+routes/uploads
+public/images
+public/files
+public/css

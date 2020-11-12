@@ -1,0 +1,43 @@
+extends layout
+
+block content
+	.container.addContent
+		h1 Edit
+		hr.hello
+		each edit in msg
+			form(class='upload' method='POST' action='')
+				input(type="hidden" name='id' value=`${edit.id}`)
+				.input-group.form-group
+					label(for='type') Content Type: 
+					select#contentType(name='type')
+						option(value='about') about
+						option(value='project') project
+						option(value='work') work
+				.input-group.form-group
+					label(for='projType') Project Type: 
+					select#contentType(name='projType')
+						option(value='') None
+						option(value='Collaborated Project') Collaboration
+						option(value='Personal Project') Personal
+				label(for="formType") Check for work form: 
+				input(type="checkbox" id='formType' name='formType' value='')
+				.container#form1(style= 'display: block;')
+					.input-group.form-group
+						input.editTitle(type='text' name='projTitle' placeholder='Project Title' value=`${edit.projTitle}`)
+					.input-group.form-group
+						input.editGithub(type='text' name='github' placeholder='github link' value=`${edit.github}`)
+					.input-group.form-group
+						input.editDemo(type='text' name='demo' placeholder='demo link' value=`${edit.demo}`)
+				.container#form2(style='display: none;')
+					.input-group.form-group
+						input(type='text' value=`${edit.employer}` name='employer' placeholder='Employer')
+					.input-group.form-group
+						input(type='text' value=`${edit.jobTitle}` name='jobTitle' placeholder='Job title')
+					.input-group.form-group
+						input(type='text' value=`${edit.location}` name='location' placeholder='Location')
+					.input-group.form-group
+						input(type='text' value=`${edit.date}` name='date' placeholder='Date')
+				.input-group.form-group
+					textarea.form-control.editForm(rows="10" cols="5" name="content" id =`${edit.body}`)
+				.form-group
+						input.btn.float-right.addContentBtn(type='submit', value='edit')

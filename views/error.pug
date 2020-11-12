@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .container.errormsg
+    h1 Oh no! An error has occured!
+    hr.hello
+    h3= message
+    h3= error.status
+    pre #{error.stack}
+    hr.hello

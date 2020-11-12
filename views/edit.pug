@@ -1,0 +1,159 @@
+extends layout
+
+block content
+	if (loggedin)
+		.container.adminTabs
+			h3 Content Management System
+			// Nav tabs
+			ul.nav.nav-tabs
+				li.nav-item
+					a.nav-link.adminTab.active(data-toggle='tab', href='#home') About Me
+				li.nav-item
+					a.nav-link.adminTab(data-toggle='tab', href='#menu1') Projects
+				li.nav-item
+					a.nav-link.adminTab(data-toggle='tab', href='#menu2') Work Experience
+			// Tab panes
+			.tab-content
+				#home.tab-pane.container.active
+					.container.dataContent
+						each contentA in about
+							span(class='close')
+								form(action="" method='POST')
+									input(type="hidden" name='contentToDel' value=`${contentA.id}` class=`${contentA.id}`)
+									button.contentBtn(type='submit') X
+							span(class='close')
+								form(action="" method='POST')
+									input(type="hidden" name='contentToEdit' value=`${contentA.id}` class=`${contentA.id}`)
+									input(type="hidden" name='editBody' value=`${contentA.content}`)
+									input(type="hidden" name='editType' value=`${contentA.type}`)
+									input(type="hidden" name='editProjTitle' value=`${contentA.projTitle}`)
+									input(type="hidden" name='editProjType' value=`${contentA.ProjType}`)
+									input(type="hidden" name='editGithub' value=`${contentA.github}`)
+									input(type="hidden" name='editDemo' value=`${contentA.demo}`)
+									input(type="hidden" name='editEmployer' value=`${contentA.employer}`)
+									input(type="hidden" name='editJobTitle' value=`${contentA.jobTitle}`)
+									input(type="hidden" name='editLocation' value=`${contentA.location}`)
+									input(type="hidden" name='editDate' value=`${contentA.date}`)
+									button.contentBtn(type='submit') EDIT
+							br
+							.row
+								.col-md-12
+									p= contentA.content
+							hr.hello
+				#menu1.tab-pane.container.fade
+					.container.dataContent
+						each contentP in proj
+								span(class='close')
+									form(action="" method='POST')
+										input(type="hidden" name='contentToDel' value=`${contentP.id}` class=`${contentP.id}`)
+										button.contentBtn(type='submit') X
+								span(class='close')
+									form(action="" method='POST')
+										input(type="hidden" name='contentToEdit' value=`${contentP.id}` class=`${contentP.id}`)
+										input(type="hidden" name='editBody' value=`${contentP.content}`)
+										input(type="hidden" name='editType' value=`${contentP.type}`)
+										input(type="hidden" name='editProjTitle' value=`${contentP.projTitle}`)
+										input(type="hidden" name='editProjType' value=`${contentP.ProjType}`)
+										input(type="hidden" name='editGithub' value=`${contentP.github}`)
+										input(type="hidden" name='editDemo' value=`${contentP.demo}`)
+										input(type="hidden" name='editEmployer' value=`${contentP.employer}`)
+										input(type="hidden" name='editJobTitle' value=`${contentP.jobTitle}`)
+										input(type="hidden" name='editLocation' value=`${contentP.location}`)
+										input(type="hidden" name='editDate' value=`${contentP.date}`)
+										button.contentBtn(type='submit') EDIT
+								br
+								.row
+									.col-md-6
+										if (contentP.projTitle != '')
+											h4= `Title: ${contentP.projTitle}`
+										if (contentP.projType != '')
+											h6= `Type: ${contentP.projType}`
+										p= contentP.content
+										if (contentP.github != '')
+											a(href=`${contentP.github}`) github link
+											br
+										if (contentP.demo != '')
+											a(href=`${contentP.demo}`) demo link 
+									if (contentP.hasImg != '1')
+										.col-md-6
+											img.img-fluid(src=`data:image/jpeg;base64,${contentP.img}` id=`${contentP.id}`)
+									else
+										h4 No Image
+								hr.hello
+				#menu2.tab-pane.container.fade
+					.container.dataContent
+						each contentW in work
+							span(class='close')
+								form(action="" method='POST')
+									input(type="hidden" name='contentToDel' value=`${contentW.id}` class=`${contentW.id}`)
+									button.contentBtn(type='submit') X
+							span(class='close')
+								form(action="" method='POST')
+									input(type="hidden" name='contentToEdit' value=`${contentW.id}` class=`${contentW.id}`)
+									input(type="hidden" name='editBody' value=`${contentW.content}`)
+									input(type="hidden" name='editType' value=`${contentW.type}`)
+									input(type="hidden" name='editProjTitle' value=`${contentW.projTitle}`)
+									input(type="hidden" name='editProjType' value=`${contentW.ProjType}`)
+									input(type="hidden" name='editGithub' value=`${contentW.github}`)
+									input(type="hidden" name='editDemo' value=`${contentW.demo}`)
+									input(type="hidden" name='editEmployer' value=`${contentW.employer}`)
+									input(type="hidden" name='editJobTitle' value=`${contentW.jobTitle}`)
+									input(type="hidden" name='editLocation' value=`${contentW.location}`)
+									input(type="hidden" name='editDate' value=`${contentW.date}`)
+									button.contentBtn(type='submit') EDIT
+							br
+							.row
+								.col-md-6
+									if (contentW.employer != '')
+										h4= `Employer: ${contentW.employer}`
+									if (contentW.jobTitle != '')
+										h6= `Job: ${contentW.jobTitle}`
+									if (contentW.location != '')
+										h6= `Location: ${contentW.location}`
+									if (contentW.date != '')
+										h6= `Dates: ${contentW.date}`
+								.col-md-6
+									p= contentW.content
+							hr.hello
+			button.addBtn(type='submit') Add Content
+		.container.addContent(style='display:none;')
+			form(class='upload' method='POST' action='' enctype='multipart/form-data')
+				.input-group.form-group
+					label(for='type') Content Type: 
+					select#contentType(name='type')
+						option(value='about') about
+						option(value='project') project
+						option(value='work') work
+				.input-group.form-group
+					label(for='projType') Project Type: 
+					select#contentType(name='projType')
+						option(value='') None
+						option(value='Collaborated Project') Collaboration
+						option(value='Personal Project') Personal
+				label(for="formType") Check for work form: 
+				input(type="checkbox" id='formType' name='formType' value='')
+				.container#form1(style='display: block;')
+					.input-group.form-group
+						input(type='text' value='' name='projTitle' placeholder='Project Title')
+					.input-group.form-group
+						input(type='text' value='' name='github' placeholder='github link')
+					.input-group.form-group
+						input(type='text' value='' name='demo' placeholder='demo link')
+					.input-group.form-group
+						input(type="file" name='img' accept='image/*')
+				.container#form2(style='display: none;')
+					.input-group.form-group
+						input(type='text' value='' name='employer' placeholder='Employer')
+					.input-group.form-group
+						input(type='text' value='' name='jobTitle' placeholder='Job title')
+					.input-group.form-group
+						input(type='text' value='' name='location' placeholder='Location')
+					.input-group.form-group
+						input(type='text' value='' name='date' placeholder='Date')
+					.input-group.form-group
+						input(type="file" name='img' accept='image/*')
+				.input-group.form-group
+					textarea.form-control(rows='5' cols='5' value='' name='content' placeholder='enter message')
+				.form-group
+					.btn.float-right.cancelContentBtn(type='button', id='cancel') cancel
+					input.btn.float-right.addContentBtn(type='submit', value='add')

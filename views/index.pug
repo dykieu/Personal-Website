@@ -1,0 +1,101 @@
+extends layout
+
+block content
+  .main
+    #header
+      section#banner
+        h2 Dylan Kieu
+        hr
+        p A showcase of my abilities and projects
+    section.sectionStyle#firstsection
+      .container
+        h2 About Me
+        hr
+        // Display only when large
+        each aboutContent in about
+          #aboutme
+            p.lead= `${aboutContent.content}`
+    section.sectionStyle#secsection
+      h2#resume  Experience | Past Work
+      hr.hello
+      section#tabs
+        .container#works
+          .row
+            .col-xs-12
+              nav
+                #nav-tab.nav.nav-tabs.nav-fill(role='tablist')
+                  each exp in work
+                    if (exp.counter == -1)
+                      a.nav-item.nav-link.active(id=`nav-work${exp.id}-tab` data-toggle='tab' href=`#nav-work${exp.id}` role='tab' aria-controls=`nav-work${exp.id}` aria-selected='true', value=`${exp.employer}`)= `${exp.employer}`
+                    else
+                      a.nav-item.nav-link(id=`nav-work${exp.id}-tab`, data-toggle='tab', href=`#nav-work${exp.id}`, role='tab', aria-controls=`nav-work${exp.id}`, aria-selected='false', value=`${exp.employer}`)= `${exp.employer}`
+              #nav-tabContent.tab-content.py-3.px-3.px-sm-0
+                each exp in work
+                  if (exp.counter == -1)
+                    .tab-pane.fade.show.active(role='tabpanel', aria-labelledby=`nav-work${exp.id}-tab`, id=`nav-work${exp.id}`)
+                      .row
+                        .col-6
+                          img.workImg(src=`data:image/jpeg;base64,${exp.img}` id=`img${exp.id}` alt="img here")
+                        .col-6
+                          p= `${exp.jobTitle}`
+                          p= `${exp.location}`
+                          p= `${exp.date}`
+                          p= `${exp.content}`
+                  else
+                    .tab-pane.fade(role='tabpanel', aria-labelledby=`nav-work${exp.id}-tab`, id=`nav-work${exp.id}`)
+                      .row
+                        .col-6
+                          img.workImg(src=`data:image/jpeg;base64,${exp.img}` id=`img${exp.id}` alt="img here")
+                        .col-6
+                          p= `${exp.jobTitle}`
+                          p= `${exp.location}`
+                          p= `${exp.date}`
+                          p= `${exp.content}`
+    section#lastSection.sectionStyle
+      h2#project  Projects
+      hr(style='margin-bottom: 5em')
+      .container
+        each project in proj
+          if (project.fade == 1)
+            .row.fromleft
+              .card.col-md-12.justify-content-center
+                .container.projImg
+                  img.card-img-top.img-fluid(src=`data:image/jpeg;base64,${project.img}` id=`${project.id}`)
+                .card-body
+                  h3.card-text= project.projTitle
+                  h6.card-text= project.projType
+                  p.card-text= project.content
+                if (project.demo != '')
+                  span.liveDemo
+                    a(href=`${project.demo}`) Demo
+                span.github
+                  a(href=`${project.github}`) GitHub
+            .row
+              .testCard(id=`zoomImg${project.id}`)
+                button.testClose(id=`${project.id}`) x
+                img.testImg(src=`data:image/jpeg;base64,${project.img}`)
+          else if (project.fade == 0)
+            .row.justify-content-center.fromRight
+              .card.col-md-12
+                .container.projImg
+                  img.card-img-top.img-fluid(src=`data:image/jpeg;base64,${project.img}` id=`${project.id}`)
+                .card-body
+                  h3.card-text= project.projTitle
+                  h6.card-text= project.projType
+                  p.card-text= project.content
+                if (project.demo != '')
+                  span.liveDemo
+                    a(href=`${project.demo}`) Live Demo
+                span.github
+                  a(href=`${project.github}`) GitHub
+            .row
+              .testCard(id=`zoomImg${project.id}`)
+                button.testClose(id=`${project.id}`) x
+                img.testImg(src=`data:image/jpeg;base64,${project.img}`)
+      footer#footer
+        a(href='https://github.com/dykieu')
+          span(style='font-size: 3em; color: black;')
+            i.fab.fa-github-square
+        a(href='https://www.linkedin.com/in/dylan-kieu-8b940a198/')
+          span(style='font-size: 3em; color: black;')
+            i.fab.fa-linkedin  
